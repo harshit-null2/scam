@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine's Proposal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #ffc0cb, #ffb6c1);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+#bear {
+    font-size: 5rem;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    to { transform: translateY(-20px); }
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: #d63384;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    height: 80px;
+}
+
+button {
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+#yesBtn {
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    color: white;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 75, 43, 0.4);
+}
+
+#noBtn {
+    background: white;
+    color: #ff4b2b;
+    border: 2px solid #ff4b2b;
+}
+
+.heart {
+    position: absolute;
+    bottom: -50px;
+    animation: floatUp linear infinite;
+    z-index: 0;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    to { transform: translateY(-110vh); }
+}
+
+/* Success Page Styles */
+.success-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+    text-align: center;
+    animation: fadeIn 1.5s ease;
+}
+
+.couple-photo {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+    border: 8px solid white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    margin: 20px 0;
+    animation: scaleIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div id="bear">🐻</div>
+<h1>Will You Be My Valentine, Paridhi?</h1>
+<h2>I've been gathering courage to ask you this...</h2>
+
+<div class="buttons">
+    <button id="yesBtn" onclick="acceptProposal()">Yes</button>
+    <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
+</div>
+
+<script>
+const noBtn = document.getElementById('noBtn');
+
+const messages = [
+    "No is not an option 😜",
+    "Nice try 😏",
+    "Still thinking? 😆",
+    "Just say YES 💖",
+    "You know you want to 😍"
+];
+
+let index = 0;
+
+function moveNoButton() {
+    noBtn.style.position = 'fixed';
+    noBtn.style.zIndex = '100'; 
+
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    noBtn.innerText = messages[index];
+    index = (index + 1) % messages.length;
+}
+
+function acceptProposal() {
+    document.body.innerHTML = `
+        <div class="success-container">
+            <h1 style="font-size: 4rem; margin-bottom: 0;">I knew you'd say YES 💖</h1>
+            
+            <img src="Us.jpeg" alt="Us" class="couple-photo">
+            
+            <p style="font-size: 1.5rem; color: #d63384; font-weight: 600; margin: 10px 0;">
+                You just made my heart the happiest, Paridhi! ❤️
+            </p>
+            <div style="font-size: 3rem;">🥰💘🌹</div>
+        </div>
+    `;
+    
+    // Extra celebration hearts
+    for(let i=0; i<40; i++) {
+        setTimeout(createHeart, i * 100);
+    }
+}
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 25 + 15 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
